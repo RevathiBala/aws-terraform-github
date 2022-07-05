@@ -39,8 +39,11 @@ resource "aws_instance" "app_server" {
   connection {
     type    = "ssh"
     host    = self.public_ip
+    port	= 22
     user    = "ec2-user"
     timeout = "2m"
+    agent 	= false
+    private_key = var.private_key
   }
 
 }
