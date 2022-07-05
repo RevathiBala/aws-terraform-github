@@ -72,6 +72,4 @@ resource "aws_security_group" "main" {
 
 data "aws_key_pair" "example" {
   key_name           = "AWS"
-  include_public_key = true
-
 }
