@@ -23,10 +23,14 @@ resource "aws_instance" "app_server" {
   key_name               = data.aws_key_pair.example.key_name
   vpc_security_group_ids = [aws_security_group.main.id]
 
+  provisioner "file" {
+    source      = "staging"
+    destination = "/tmp/staging"
+  } 
   provisioner "remote-exec" {
     inline = [
-      "touch hello.txt",
-      "echo helloworld remote provisioner >> hello.txt",
+      "cat /tmp/staging",
+      "echo hello",
     ]
   }
   tags = {
@@ -36,38 +40,13 @@ resource "aws_instance" "app_server" {
     type    = "ssh"
     host    = self.public_ip
     user    = "ec2-user"
-    timeout = "4m"
+    timeout = "2m"
   }
 
 }
 
-resource "aws_security_group" "main" {
-  egress = [
-    {
-      cidr_blocks      = ["0.0.0.0/0", ]
-      description      = ""
-      from_port        = 0
-      ipv6_cidr_blocks = []
-      prefix_list_ids  = []
-      protocol         = "-1"
-      security_groups  = []
-      self             = false
-      to_port          = 0
-    }
-  ]
-  ingress = [
-    {
-      cidr_blocks      = ["0.0.0.0/0", ]
-      description      = ""
-      from_port        = 22
-      ipv6_cidr_blocks = []
-      prefix_list_ids  = []
-      protocol         = "tcp"
-      security_groups  = []
-      self             = false
-      to_port          = 22
-    }
-  ]
+data "aws_security_group" "selected" {
+  name = "launch-wizard-1"
 }
 
 data "aws_key_pair" "example" {
