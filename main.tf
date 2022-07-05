@@ -20,7 +20,7 @@ resource "aws_instance" "app_server" {
   count                  = 1
   ami                    = "ami-08df646e18b182346"
   instance_type          = "t2.micro"
-  key_name               = "ec2-deployer-key-pair"
+  key_name               = data.aws_key_pair.example.id
   vpc_security_group_ids = [aws_security_group.main.id]
 
   provisioner "remote-exec" {
@@ -70,7 +70,8 @@ resource "aws_security_group" "main" {
   ]
 }
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "AWS"
-  public_key = var.public_key
- }
+data "aws_key_pair" "example" {
+  key_name           = "AWS"
+  include_public_key = true
+
+}
