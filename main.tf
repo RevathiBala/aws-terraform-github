@@ -18,7 +18,7 @@ provider "aws" {
 
 resource "aws_instance" "app_server" {
   count                  = 2
-  ami                    = "ami-047e03b8591f2d48a"
+  ami                    = "ami-08df646e18b182346"
   instance_type          = "t2.micro"
   key_name               = "ec2-deployer-key-pair"
   vpc_security_group_ids = [aws_security_group.main.id]
@@ -41,3 +41,36 @@ resource "aws_instance" "app_server" {
 
 }
 
+resource "aws_security_group" "main" {
+  egress = [
+    {
+      cidr_blocks      = ["0.0.0.0/0", ]
+      description      = ""
+      from_port        = 0
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "-1"
+      security_groups  = []
+      self             = false
+      to_port          = 0
+    }
+  ]
+  ingress = [
+    {
+      cidr_blocks      = ["0.0.0.0/0", ]
+      description      = ""
+      from_port        = 22
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "tcp"
+      security_groups  = []
+      self             = false
+      to_port          = 22
+    }
+  ]
+}
+
+resource "aws_key_pair" "deployer" {
+  key_name   = "AWS"
+  public_key = va.public_key
+ }
