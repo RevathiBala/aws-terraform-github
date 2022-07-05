@@ -72,5 +72,5 @@ resource "aws_security_group" "main" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = "AWS"
-  public_key = va.public_key
+  public_key = var.public_key
  }
