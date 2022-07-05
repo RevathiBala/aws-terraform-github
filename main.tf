@@ -29,8 +29,9 @@ resource "aws_instance" "app_server" {
   } 
   provisioner "remote-exec" {
     inline = [
-      "cat /tmp/staging",
-      "echo hello",
+      "sudo yum -y install java-1.8.0-openjdk",
+      "cd /tmp/staging",
+      "java -jar awspoc-0.0.1-SNAPSHOT.jar"
     ]
   }
   tags = {
