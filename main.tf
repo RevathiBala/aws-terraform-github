@@ -17,7 +17,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
-  count                  = 2
+  count                  = 1
   ami                    = "ami-08df646e18b182346"
   instance_type          = "t2.micro"
   key_name               = "ec2-deployer-key-pair"
