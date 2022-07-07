@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.aws.poc</groupId>
-	<artifactId>awspoc</artifactId>
+	<artifactId>aws-terraform-github</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>aws-terraform-github</name>
 	<description>POC for AWS</description>
